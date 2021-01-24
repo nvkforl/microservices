@@ -1,0 +1,16 @@
+mvn clean install -Dspring.profiles.active=local
+
+java -jar -Dspring.profiles.active=local jpa-learning-0.0.1-SNAPSHOT.jar
+
+
+sudo docker build -t jpacontainer/jpalearning:3.0 --build-arg envVal='prod' .
+sudo docker build -t jpacontainer/jpalearning:4.0 --build-arg envVal='prod' .
+
+
+sudo docker run --publish 3307:3306 --name mysql-standalone --network jpatutorialNvk -v /home/nitish/Desktop/mysqlVolume:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=jpatutorial -e MYSQL_PASSWORD=root mysql:8.0
+
+
+sudo docker run -p 9001:9001 --name springboot-mysql --network jpatutorialNvk jpacontainer/jpalearning:4.0
+
+
+
